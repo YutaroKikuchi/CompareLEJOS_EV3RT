@@ -1,1 +1,4 @@
 # CompareLEJOS_EV3RT
+EV3RTとLejosの性能差の比較実験のコードです。
+drive_straitフォルダのコードが2輪倒立で真っすぐ走るだけのコード
+loopフォルダが同じ処理の時間を計測するためのコード
