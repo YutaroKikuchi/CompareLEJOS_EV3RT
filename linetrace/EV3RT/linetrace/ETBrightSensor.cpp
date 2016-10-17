@@ -6,7 +6,7 @@ namespace linetrace
 {
 
 ETBrightSensor::ETBrightSensor(ev3api::ColorSensor* addedSensor)
-:min(0.0F), max(1.0F), min_api(0.0F), max_api(1.0F)
+:min(0.0F), max(1.0F), min_api(0.0F), max_api(100.0F)
 {
 	color = addedSensor;
 }

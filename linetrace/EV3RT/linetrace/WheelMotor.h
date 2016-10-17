@@ -1,22 +1,23 @@
 #ifndef LINETRACE_WHEEL_MOTOR_H
 #define LINETRACE_WHEEL_MOTOR_H
 
-#include "lejos/hardware/port/TachoMotorPort.h"
+#include "ev3api.h"
+#include "Motor.h"
 
 namespace linetrace
 {
 class WheelMotor
 {
 private:
-	lejos::hardware::port::TachoMotorPort motorPortR;
-	lejos::hardware::port::TachoMotorPort motorPortL;
+	ev3api::Motor* right;
+	ev3api::Motor* left;
 
 public:
-	WheelMotor(void motorR, void motorL);
+	WheelMotor(ev3api::Motor* motorR, ev3api::Motor* motorL);
 
 	void resetEncord();
 
-	void controlWheel(int right, int left);
+	void controlWheel(int rightPWM, int leftPWM);
 
 	int getEncordL();
 

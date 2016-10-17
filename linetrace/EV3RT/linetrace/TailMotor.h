@@ -1,7 +1,7 @@
 #ifndef LINETRACE_TAIL_MOTOR_H
 #define LINETRACE_TAIL_MOTOR_H
 
-#include "lejos/hardware/port/TachoMotorPort.h"
+#include "Motor.h"
 
 namespace linetrace
 {
@@ -12,10 +12,10 @@ private:
 
 	int PWM_MAX;
 
-	lejos::hardware::port::TachoMotorPort motorPortT;
+	ev3api::Motor* motorPortT;
 
 public:
-	TailMotor(void tail);
+	TailMotor(ev3api::Motor* tail);
 
 	void resetEncord();
 
