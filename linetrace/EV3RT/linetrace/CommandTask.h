@@ -1,29 +1,27 @@
 #ifndef LINETRACE_COMMAND_TASK_H
 #define LINETRACE_COMMAND_TASK_H
 
-#include "java/util/TimerTask.h"
-#include "linetrace/SerialConnect.h"
-#include "linetrace/ETTouchSensor.h"
+#include "SerialConnect.h"
+#include "ETTouchSensor.h"
 
 namespace linetrace
 {
-class CommandTask : public java::util::TimerTask
-{
-protected:
-	boolean startFlag;
+	class CommandTask
+	{
+	protected:
+		bool startFlag;
 
-	SerialConnect serial;
-	ETTouchSensor touch;
+		SerialConnect* serial;
+		ETTouchSensor* touch;
 
-protected:
-	CommandTask(ETTouchSensor touch);
+	public:
+		CommandTask(ETTouchSensor* touch);
 
-public:
-	void run();
+	public:
+		void run();
 
-	boolean checkStartCommand();
+		bool checkStartCommand();
 
-};
-
+	};
 }  // namespace linetrace
 #endif

@@ -1,19 +1,32 @@
 #include "CommandTask.h"
+#include "ETTouchSensor.h"
+#include "SerialConnect.h"
 
 namespace linetrace
 {
 
-CommandTask::CommandTask(ETTouchSensor touch)
+CommandTask::CommandTask(ETTouchSensor* touch)
 :startFlag(false)
 {
+	this->touch = touch;
+	this->serial = new SerialConnect();
 }
 
 void CommandTask::run()
 {
+	serial->checkCommand();
+
+	if(serial->getCommand() == 's'){
+		startFlag = true;
+	}
 }
 
-boolean CommandTask::checkStartCommand()
+bool CommandTask::checkStartCommand()
 {
-	return 0;
+	if(this->touch->isButtonPressed() == true){
+		this->startFlag = true;
+	}
+
+	return startFlag;
 }
 }  // namespace linetrace

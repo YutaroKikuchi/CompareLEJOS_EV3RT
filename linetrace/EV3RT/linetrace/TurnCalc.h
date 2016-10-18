@@ -1,7 +1,7 @@
 #ifndef LINETRACE_TURN_CALC_H
 #define LINETRACE_TURN_CALC_H
 
-#include "linetrace/ETBrightSensor.h"
+#include "ETBrightSensor.h"
 
 namespace linetrace
 {
@@ -16,10 +16,10 @@ private:
 
 	float prediff;
 
-	ETBrightSensor bright;
+	ETBrightSensor* bright;
 
 public:
-	TurnCalc(ETBrightSensor bright);
+	TurnCalc(ETBrightSensor* bright);
 
 	float getTurn();
 

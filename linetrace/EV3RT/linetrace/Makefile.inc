@@ -1,6 +1,6 @@
 APPL_COBJS +=
 
-APPL_CXXOBJS += ETBrightSensor.o ETTouchSensor.o ETGyroSensor.o WheelMotor.o TailMotor.o
+APPL_CXXOBJS += ETBrightSensor.o ETTouchSensor.o ETGyroSensor.o WheelMotor.o TailMotor.o TurnCalc.o CommandTask.o SerialConnect.o
 
 SRCLANG := c++
 

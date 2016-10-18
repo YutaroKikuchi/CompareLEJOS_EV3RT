@@ -8,6 +8,7 @@ TailMotor::TailMotor(ev3api::Motor* tail)
 {
   motorPortT = tail;
   motorPortT->reset();
+  motorPortT->setPWM(0);
 }
 
 void TailMotor::resetEncord()
