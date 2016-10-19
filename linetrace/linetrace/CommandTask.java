@@ -19,7 +19,7 @@ public class CommandTask extends TimerTask{
 
 		serial.checkCommand();
 
-		if(serial.getCommand() == 's'){
+		if(serial.getCommand() == 83){
 			startFlag = true;
 		}else if(touch.isButtonPressed() == true){
 			startFlag = true;

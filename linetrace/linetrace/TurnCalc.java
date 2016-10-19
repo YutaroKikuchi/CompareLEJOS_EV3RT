@@ -11,8 +11,10 @@ public class TurnCalc {
 
 	private float prediff = 0.0F;
 
-	public TurnCalc(BrightSensor bright){
+	public TurnCalc(BrightSensor bright, float KP, float KD){
 		this.bright = bright;
+		this.KP = KP;
+		this.KD = KD;
 	}
 
 	public float getTurn() {
@@ -25,7 +27,7 @@ public class TurnCalc {
 
 		prediff = curdiff;
 
-		return (int)(proportion+differential);
+		return (int)(proportion+differential) * -1;
 	}
 
 	public void setTarget(float white, float black) {

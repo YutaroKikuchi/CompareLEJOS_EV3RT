@@ -32,7 +32,7 @@ public class LineTrace {
 		BrightSensor bright = new BrightSensor(new EV3ColorSensor(SensorPort.S3));
 		TailMotor tail = new TailMotor(motorPortT);
 
-		TurnCalc turn = new TurnCalc(bright);
+		TurnCalc turn = new TurnCalc(bright,70.0F,200.0F);
 
 
         LCD.drawString("Please Wait...  ", 0, 4);
@@ -59,7 +59,9 @@ public class LineTrace {
         Balancer.init();
             // 倒立振子制御初期化
 
+        Sound.beep();
         calibration(bright, touch);
+        turn.setTarget(WHITE, BLACK);
 
         // リモート接続
         Timer rcTimer = new Timer();
@@ -81,7 +83,7 @@ public class LineTrace {
             }else{
             }
 
-        	tail.controlTail(92);
+        	tail.controlTail(93);
         	Delay.msDelay(20);
         }
 
@@ -102,6 +104,10 @@ public class LineTrace {
 
         LCD.clear();
         LCD.drawString("Time:"+(end - start)+"[ms]", 0, 0);
+
+        driveTimer.cancel();
+        disTimer.cancel();
+        wheel.controlWheel(0, 0);
 
         Button.waitForAnyEvent();
 

@@ -24,11 +24,11 @@ public class DistanceTask extends TimerTask{
 	}
 
 	public float getDistanceCMeter(){
-		return (((this.curposLeft + this.curposRight) / 2.0F ) / 360.0F) * 26.0F;
+		return (((this.curposLeft + this.curposRight) / 2.0F ) / 360.0F) * 26.2F;
 	}
 
 	public float getDistanceMeter(){
-		return (((this.curposLeft + this.curposRight) / 2.0F ) / 360.0F) * 26.0F;
+		return (((this.curposLeft + this.curposRight) / 2.0F ) / 360.0F) * 0.262F;
 	}
 
 }
