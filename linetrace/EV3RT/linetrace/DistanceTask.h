@@ -1,24 +1,25 @@
 #ifndef LINETRACE_DISTANCE_TASK_H
 #define LINETRACE_DISTANCE_TASK_H
 
-#include "java/util/TimerTask.h"
-#include "linetrace/WheelMotor.h"
+#include "WheelMotor.h"
 
 namespace linetrace
 {
-class DistanceTask : public java::util::TimerTask
+class DistanceTask
 {
 private:
 	float curposRight;
 
 	float curposLeft;
 
+	float distance_CM;
+
 
 protected:
-	WheelMotor wheel;
+	WheelMotor* wheel;
 
-protected:
-	DistanceTask(WheelMotor wheel);
+public:
+	DistanceTask(WheelMotor* wheel);
 
 public:
 	void run();

@@ -15,7 +15,7 @@ private:
 	ev3api::Motor* motorPortT;
 
 public:
-	TailMotor(ev3api::Motor* tail);
+	TailMotor(ev3api::Motor* tail, float P);
 
 	void resetEncord();
 

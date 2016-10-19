@@ -4,10 +4,12 @@
 namespace linetrace
 {
 
-TurnCalc::TurnCalc(ETBrightSensor* bright)
-:KP(100.0F), KD(0.0F), BrightTarget(0.0F), prediff(0.0F)
+TurnCalc::TurnCalc(ETBrightSensor* bright, float KP, float KD)
+:BrightTarget(0.0F), prediff(0.0F)
 {
 	this->bright = bright;
+	this->KP = KP;
+	this->KD = KD;
 }
 
 float TurnCalc::getTurn()

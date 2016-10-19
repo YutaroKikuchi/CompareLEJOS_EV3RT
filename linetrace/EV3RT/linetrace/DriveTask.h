@@ -1,24 +1,25 @@
 #ifndef LINETRACE_DRIVE_TASK_H
 #define LINETRACE_DRIVE_TASK_H
 
-#include "java/util/TimerTask.h"
-#include "linetrace/ETGyroSensor.h"
-#include "linetrace/TurnCalc.h"
-#include "linetrace/WheelMotor.h"
-#include "linetrace/TailMotor.h"
+#include "ev3api.h"
+#include "ETGyroSensor.h"
+#include "TurnCalc.h"
+#include "WheelMotor.h"
+#include "TailMotor.h"
+#include "balancer.h"
 
 namespace linetrace
 {
-class DriveTask : public java::util::TimerTask
+class DriveTask
 {
 protected:
-	ETGyroSensor gyro;
-	TurnCalc turncalc;
-	WheelMotor wheel;
-	TailMotor tail;
+	ETGyroSensor* gyro;
+	TurnCalc* turn;
+	WheelMotor* wheel;
+	TailMotor* tail;
 
-protected:
-	DriveTask(TurnCalc turn, WheelMotor wheel, TailMotor tail, ETGyroSensor gyro);
+public:
+	DriveTask(TurnCalc* turn, WheelMotor* wheel, TailMotor* tail, ETGyroSensor* gyro);
 
 public:
 	void run();

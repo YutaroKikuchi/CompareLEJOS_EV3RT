@@ -12,6 +12,8 @@
 #include "Motor.h"
 #include "TurnCalc.h"
 #include "CommandTask.h"
+#include "DistanceTask.h"
+#include "DriveTask.h"
 
 using namespace ev3api;
 
@@ -44,11 +46,15 @@ linetrace::ETBrightSensor* bright;
 linetrace::WheelMotor* wheel;
 linetrace::TailMotor* tail;
 linetrace::TurnCalc* turn;
+linetrace::DistanceTask* dt;
+linetrace::DriveTask* drivet;
 
 float BLACK = 0.0;
 float WHITE = 0.0;
 
 void main_task(intptr_t unused) {
+
+  uint32_t start = 0,end = 0;
 
   touchSensor = new TouchSensor(PORT_1);
   colorSensor = new ColorSensor(PORT_3);
@@ -63,73 +69,66 @@ void main_task(intptr_t unused) {
   touch = new linetrace::ETTouchSensor(touchSensor);
   gyro = new linetrace::ETGyroSensor(gyroSensor);
   wheel = new linetrace::WheelMotor(right,left);
-  tail = new linetrace::TailMotor(tailMotor);
-  turn = new linetrace::TurnCalc(bright);
+  tail = new linetrace::TailMotor(tailMotor, 2.0);
+  turn = new linetrace::TurnCalc(bright,0.0,0.0);
   ct = new linetrace::CommandTask(touch);
-
-  //calibration();
+  dt = new linetrace::DistanceTask(wheel);
+  drivet = new linetrace::DriveTask(turn,wheel,tail,gyro);
 
   act_tsk(BT_TASK);
+  //act_tsk(DIS_TASK);
   ev3_speaker_play_tone	(NOTE_C4,100 );
 
-/*
-  wheel->resetEncord();
+  tail->resetEncord();
 
   calibration();
 
   turn->setTarget(WHITE, BLACK);
 
   char buff[256] = {'\0'};
-  float value = 0.0;
-  */
-
+  int32_t value = 0;
   while(1){
-    /*
-    value = gyro->getGyro_deg_per_sec();
-
-    sprintf(buff,"%f",value);
-
-    ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-    ev3_lcd_draw_string(buff, 0, CALIB_FONT_HEIGHT*1);
-
-    value = bright->getBright();
-    sprintf(buff,"%f",value);
-    ev3_lcd_draw_string(buff,0,CALIB_FONT_HEIGHT*2);
-
-    wheel->controlWheel(20,20);
-    */
+    tail->controlTail(90);
 
     if(ct->checkStartCommand() == true){
-      ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-      ev3_lcd_draw_string("TRUE", 0, CALIB_FONT_HEIGHT*1);
-    }else{
-      ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-      ev3_lcd_draw_string("FALSE", 0, CALIB_FONT_HEIGHT*1);
+      break;
     }
-
-    clock->sleep(20);
+    clock->sleep(10);
   }
-  ev3_speaker_play_tone	(NOTE_C4,100 );
-
 
   ter_tsk(BT_TASK);
 
-/*
+  act_tsk(DIS_TASK);
+
+  wheel->resetEncord();
+  balance_init();
+
+  start = clock->now();
   while(1){
-    value = bright->getBright();
 
-    sprintf(buff,"%f",value);
-    ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-    ev3_lcd_draw_string(buff, 0, CALIB_FONT_HEIGHT*1);
-
-    while(1){
-      if(touch->isButtonPressed()==true){
-        break;
-      }
-      clock->sleep(50);
+    if(touch->isButtonPressed() == true){
+      break;
     }
+
+    if(dt->getDistanceMeter() > 2.0){
+      break;
+    }
+
+    drivet->run();
+    clock->sleep(4);
   }
-  */
+  end = clock->now();
+
+  ev3_speaker_play_tone	(NOTE_C4,100 );
+
+  ter_tsk(DIS_TASK);
+  wheel->controlWheel(0,0);
+
+  value = end-start;
+  sprintf(buff,"%d",(int)value);
+  ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
+  ev3_lcd_draw_string(buff, 0, CALIB_FONT_HEIGHT*1);
+
   ext_tsk();
 
 }
@@ -141,6 +140,7 @@ void calibration(){
   ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
   ev3_lcd_draw_string("Detect BLACK", 0, CALIB_FONT_HEIGHT*1);
   while(1){
+
     if(touch->isButtonPressed() == true){
       flag = true;
     }else{
@@ -177,5 +177,12 @@ void bt_task(intptr_t unused)
   while(1){
     ct->run();
     clock->sleep(20);
+  }
+}
+
+void dis_task(intptr_t unused){
+  while(1){
+    dt->run();
+    clock->sleep(100);
   }
 }

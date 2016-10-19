@@ -10,6 +10,8 @@ WheelMotor::WheelMotor(ev3api::Motor* motorR, ev3api::Motor* motorL)
 {
 	right = motorR;
 	left = motorL;
+	left->reset();
+	right->reset();
 }
 
 void WheelMotor::resetEncord()

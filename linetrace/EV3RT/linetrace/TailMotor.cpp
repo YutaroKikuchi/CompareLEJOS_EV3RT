@@ -3,9 +3,10 @@
 namespace linetrace
 {
 
-TailMotor::TailMotor(ev3api::Motor* tail)
-:P(2.0F), PWM_MAX(60)
+TailMotor::TailMotor(ev3api::Motor* tail, float P)
+:PWM_MAX(60)
 {
+  this->P = P;
   motorPortT = tail;
   motorPortT->reset();
   motorPortT->setPWM(0);
