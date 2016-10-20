@@ -70,7 +70,7 @@ void main_task(intptr_t unused) {
   gyro = new linetrace::ETGyroSensor(gyroSensor);
   wheel = new linetrace::WheelMotor(right,left);
   tail = new linetrace::TailMotor(tailMotor, 2.0);
-  turn = new linetrace::TurnCalc(bright,0.0,0.0);
+  turn = new linetrace::TurnCalc(bright,80.0,300.0);
   ct = new linetrace::CommandTask(touch);
   dt = new linetrace::DistanceTask(wheel);
   drivet = new linetrace::DriveTask(turn,wheel,tail,gyro);
@@ -88,7 +88,7 @@ void main_task(intptr_t unused) {
   char buff[256] = {'\0'};
   int32_t value = 0;
   while(1){
-    tail->controlTail(90);
+    tail->controlTail(89);
 
     if(ct->checkStartCommand() == true){
       break;

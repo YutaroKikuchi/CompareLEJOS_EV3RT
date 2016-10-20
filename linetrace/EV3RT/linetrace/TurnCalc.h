@@ -19,7 +19,7 @@ private:
 	ETBrightSensor* bright;
 
 public:
-	TurnCalc(ETBrightSensor* bright);
+	TurnCalc(ETBrightSensor* bright, float KP, float KD);
 
 	float getTurn();
 
