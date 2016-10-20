@@ -32,7 +32,7 @@ public class LineTrace {
 		BrightSensor bright = new BrightSensor(new EV3ColorSensor(SensorPort.S3));
 		TailMotor tail = new TailMotor(motorPortT);
 
-		TurnCalc turn = new TurnCalc(bright,70.0F,200.0F);
+		TurnCalc turn = new TurnCalc(bright,80.0F,300.0F);
 
 
         LCD.drawString("Please Wait...  ", 0, 4);
@@ -101,6 +101,7 @@ public class LineTrace {
         }
 
         long end = System.currentTimeMillis();
+        Sound.beep();
 
         LCD.clear();
         LCD.drawString("Time:"+(end - start)+"[ms]", 0, 0);
